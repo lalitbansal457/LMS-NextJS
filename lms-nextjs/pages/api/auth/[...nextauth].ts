@@ -15,7 +15,7 @@ export default NextAuth({
       async signIn(user, account, profile) {
         console.log(user, account, profile);
         if (account.provider === 'google' &&
-            profile.verified_email === true &&
+            profile.verified_email === true
             ) {
           return true
         } else {
