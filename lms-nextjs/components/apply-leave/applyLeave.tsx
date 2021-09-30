@@ -37,13 +37,15 @@ export default function ApplyLeaveComponent() {
 
 	// Form submit handler
 	const onSubmit: SubmitHandler<IFormInput> =  async data => {
+		data.status = "pending";
+		data.appliedOn = moment();
 		// Add leave
 		let response = await fetch('/api/leaves', {
 			method: 'POST',
             body: JSON.stringify(data)
 		})
 		let responseData = await response.json();
-		
+
 
 	};
 
@@ -78,112 +80,120 @@ export default function ApplyLeaveComponent() {
 			<form onSubmit={handleSubmit(onSubmit)}>
 			    <Box >
 				    <Grid container >
+				    	
 					    <Grid item xs={12}>
-						    <Box sx={{  m: 1}}>
-							    <FormControl fullWidth variant="filled">
-								   	<Controller
-								   		rules = {{ required: true }}
-							           render={({ field}) => (
-							           	<>
-							           	<InputLabel id="select-label">Age</InputLabel>
-							            <Select {...field} >
-							            	{leaveList}
-				                        </Select>
-				                        </>
-							           )}
-							           name="leaveType"
-							           control={control}
-							           defaultValue=""
-							           displayEmpty
-							        />
-						        </FormControl>
-					        </Box>
+						    <Box pb={2}>
+			    			    <FormControl fullWidth variant="filled">
+			    				   	<Controller
+			    				   		rules = {{ required: true }}
+			    			           render={({ field}) => (
+			    			           	<>
+			    			           	<InputLabel id="select-label">Age</InputLabel>
+			    			            <Select {...field} >
+			    			            	{leaveList}
+			                            </Select>
+			                            </>
+			    			           )}
+			    			           name="leaveType"
+			    			           control={control}
+			    			           defaultValue=""
+			    			           displayEmpty
+			    			        />
+			    		        </FormControl>
+			    		    </Box>
 					    </Grid>
-					    <Grid item xs={12} sx={{flexGrow: 1}}>
-					        <Box sx={{  m: 1, minWidth: 120}}>
-					        	<Grid item xs={6}>
-							        <FormControl fullWidth>
-									    <Controller
-									    		rules = {{ required: true }}
-										        name="fromDate"
-										        control={control}
-										        defaultValue={null}
-										        render={({ field }) => <LocalizationProvider dateAdapter={AdapterDateFns}>
-									    	<DesktopDatePicker
-									    		disablePast
-									    	    label="From Date"
-									    	    value={field.value}
-									    	    onChange={(newValue) => {
-									    	    	field.onChange(newValue);
-									    	    	
-									    	    }}
-									    	    renderInput={(params) => <TextField variant="filled" {...params} />}
-									    	  />
-									    	</LocalizationProvider>}
-										/>
-									</FormControl>
-								</Grid>
-								<Grid item xs={6}>
-							        <FormControl  fullWidth>
-									    <Controller
-									    		rules = {{ required: true }}
-										        name="toDate"
-										        control={control}
-										        defaultValue={null}
-										        render={({ field }) => <LocalizationProvider dateAdapter={AdapterDateFns}>
-									    	<DesktopDatePicker
-									    		disabled ={!leaveData.fromDate}
-									    		shouldDisableDate={disableDates(leaveData.fromDate)}
-									    	    label="To Date"
-									    	    value={field.value}
-									    	    onChange={(newValue) => {
-									    	    	field.onChange(newValue);
-									    	    }}
-									    	    renderInput={(params) => <TextField variant="filled" {...params} />}
-									    	  />
-									    	</LocalizationProvider>}
-										/>
-									</FormControl>
-								</Grid>
+					    
+					    <Grid item xs={6}>
+						    <Box pb={2}>
+						        <FormControl fullWidth>
+								    <Controller
+								    		rules = {{ required: true }}
+									        name="fromDate"
+									        control={control}
+									        defaultValue={null}
+									        render={({ field }) => <LocalizationProvider dateAdapter={AdapterDateFns}>
+								    	<DesktopDatePicker
+								    		disablePast
+								    	    label="From Date"
+								    	    value={field.value}
+								    	    onChange={(newValue) => {
+								    	    	field.onChange(newValue);
+								    	    	
+								    	    }}
+								    	    renderInput={(params) => <TextField variant="filled" {...params} />}
+								    	  />
+								    	</LocalizationProvider>}
+									/>
+								</FormControl>
 							</Box>
-						</Grid>	
+						</Grid>
+						<Grid item xs={6}>
+							<Box pb={2}>
+						        <FormControl  fullWidth>
+								    <Controller
+								    		rules = {{ required: true }}
+									        name="toDate"
+									        control={control}
+									        defaultValue={null}
+									        render={({ field }) => <LocalizationProvider dateAdapter={AdapterDateFns}>
+								    	<DesktopDatePicker
+								    		disabled ={!leaveData.fromDate}
+								    		shouldDisableDate={disableDates(leaveData.fromDate)}
+								    	    label="To Date"
+								    	    value={field.value}
+								    	    onChange={(newValue) => {
+								    	    	field.onChange(newValue);
+								    	    }}
+								    	    renderInput={(params) => <TextField variant="filled" {...params} />}
+								    	  />
+								    	</LocalizationProvider>}
+									/>
+								</FormControl>
+							</Box>
+						</Grid>
 						<Grid item xs={3}>
-							<Controller
-						        name="isFirstHalf"
-						        control={control}
-						        defaultValue={false}
-						        render={({ field }) => <FormControlLabel
-							        label="First Half"
-							        control={<Checkbox {...field} />}
-							      />
-							  }
-						    />
-						</Grid> 
-						<Grid item xs={3}>
-							<Controller
-						        name="isSecondHalf"
-						        control={control}
-						        defaultValue={false}
-						        render={({ field }) => <FormControlLabel
-							        label="Second Half"
-							        control={<Checkbox {...field} />}
-							      />
-							  }
-						    />
-						</Grid> 
-						<Grid item xs={12}>
-							<FormControl fullWidth>
+							<Box pb={2}>
 								<Controller
-							        name="leaveReason"
+							        name="isFirstHalf"
 							        control={control}
-							        defaultValue={""}
-							        rules = {{ required: true }}
-							        render={({ field }) => <TextField id="filled-basic" label="Reason for leave" variant="filled" onChange={(newValue) => {
-							    	    	field.onChange(newValue);
-							    	    }} />
+							        defaultValue={false}
+							        render={({ field }) => <FormControlLabel
+								        label="First Half"
+								        control={<Checkbox {...field} />}
+								      />
 								  }
 							    />
-							</FormControl>
+							</Box>
+						</Grid> 
+						<Grid item xs={3}>
+							<Box pb={2}>
+								<Controller
+							        name="isSecondHalf"
+							        control={control}
+							        defaultValue={false}
+							        render={({ field }) => <FormControlLabel
+								        label="Second Half"
+								        control={<Checkbox {...field} />}
+								      />
+								  }
+							    />
+							</Box>
+						</Grid> 
+						<Grid item xs={12}>
+							<Box pb={2}>
+								<FormControl fullWidth>
+									<Controller
+								        name="leaveReason"
+								        control={control}
+								        defaultValue={""}
+								        rules = {{ required: true }}
+								        render={({ field }) => <TextField id="filled-basic" label="Reason for leave" variant="filled" onChange={(newValue) => {
+								    	    	field.onChange(newValue);
+								    	    }} />
+									  }
+								    />
+								</FormControl>
+								</Box>
 						</Grid> 
 					</Grid>    
 				</Box>
@@ -203,8 +213,9 @@ export default function ApplyLeaveComponent() {
 			    <div>
 			    	<textarea name="comment" {...register("comment", {required: true})} id="" cols="30" rows="1" className="form-control"></textarea>
 			    </div>*/}
-		      <input type="submit" disabled={!isValid} />
+		      <button type="submit" variant="outlined" disabled={!isValid} >Apply Leave</button>
 		    </form>
 		</Container>
 	)
 }
+ 

@@ -4,7 +4,6 @@ import { MongoClient } from 'mongodb';
 const MONGODB_URI = process.env.MONGODB_URI;
 const MONGODB_DB = process.env.DB_NAME;
 
-console.log(process.env)
 // check the MongoDB URI
 if (!MONGODB_URI) {
     throw new Error('Define the MONGODB_URI environmental variable');

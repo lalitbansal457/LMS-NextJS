@@ -14,15 +14,12 @@ export default function loginForm() {
 	const [session, loading] = useSession();
 	const router = useRouter();
 
-	console.log("session", session)
-
 	if(session) {
 		router.push('/team-member')
 	}
 
 	const loginUser = async event => {
 		let userData = await postLoginData(event);
-		console.log("userData", userData)
 	}
 
 	if(!session) {
