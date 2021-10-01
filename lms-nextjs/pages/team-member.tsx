@@ -12,12 +12,15 @@ export default function teamMember({leaves}) {
 	if(!session && !loading) {
 		router.push('/login')
 	}
+	const handleState = (x) => {
+		console.log("x", x);
+	}
 
 	
 	return (
 		<>
 		
-			<ApplyLeaveComponent />
+			<ApplyLeaveComponent onLeaveApplied={handleState} />
 		
 			<GetLeavesComponent leaves={leaves} mt={3} />
 			

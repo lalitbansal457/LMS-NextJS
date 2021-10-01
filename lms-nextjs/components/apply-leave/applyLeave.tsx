@@ -30,7 +30,7 @@ interface IFormInput {
   leaveType: leaveTypeEnum;
 }
 
-export default function ApplyLeaveComponent() {
+export default function ApplyLeaveComponent(props) {
 
 	const { register, reset, handleSubmit, formState: { errors, isValid }, control, getValues } = useForm<IFormInput>({mode: "onChange"});
 
@@ -48,6 +48,7 @@ export default function ApplyLeaveComponent() {
 		})
 		let responseData = await response.json();
 		refreshData();
+		props.onLeaveApplied(responseData)
 	};
 
 	const refreshData = () => {
