@@ -6,10 +6,10 @@ import Box from '@mui/material/Box';
 
 export default function GetLeavesComponent({leaves}) {
 
-	const listItems = leaves.map((leave) =>
-		<>
-			<Box  pt={3} key={leave._id}>
-		        <Grid container spacing={5}>
+	const listItems = leaves.map((leave, index) =>
+		
+			<>
+		        <Grid container key={index}>
 			        <Grid item xs={3} >
 			        	<div>Leave period</div>
 			        	<div>{moment(leave.fromDate).format("DD MMM YYYY")} - {moment(leave.fromDate).format("DD MMM YYYY")}</div>	
@@ -32,15 +32,18 @@ export default function GetLeavesComponent({leaves}) {
 			          <div>{moment(leave.appliedOn).format("DD MMM YYYY")}</div>
 			        </Grid>
 			    </Grid>
-			</Box>
-		<hr/>
-		</>
+			    <hr/>
+			</>
+		
     );
 
 	return (
-		<Container>
-			<Grid item xs={12}>
-				{listItems}	
+		<Container >
+			<h3> Leave Details</h3>	
+			<Grid spacing={5} item xs={12}>
+				<Box sx = {{bgcolor: '#ccc'}} p={2} >
+					{listItems}	
+				</Box>
 			</Grid>
 		</Container>
 	)

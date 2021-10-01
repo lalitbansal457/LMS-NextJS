@@ -13,9 +13,10 @@ import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import moment from "moment";
 import FormControlLabel from '@mui/material/FormControlLabel';
-
+import { useRouter } from 'next/router';
 
 
 enum leaveTypeEnum {
@@ -31,9 +32,10 @@ interface IFormInput {
 
 export default function ApplyLeaveComponent() {
 
-	const { register, handleSubmit, formState: { errors, isValid }, control, getValues } = useForm<IFormInput>({mode: "onChange"});
+	const { register, reset, handleSubmit, formState: { errors, isValid }, control, getValues } = useForm<IFormInput>({mode: "onChange"});
 
 	const leaveData = getValues(); //  Get value from form
+	const router = useRouter();
 
 	// Form submit handler
 	const onSubmit: SubmitHandler<IFormInput> =  async data => {
@@ -45,9 +47,12 @@ export default function ApplyLeaveComponent() {
             body: JSON.stringify(data)
 		})
 		let responseData = await response.json();
-
-
+		refreshData();
 	};
+
+	const refreshData = () => {
+	   router.replace(router.asPath);
+	 };
 
 	// Type of leaves array
 	const leaveTypes = [
@@ -77,10 +82,10 @@ export default function ApplyLeaveComponent() {
 	 
 	return (
 		<Container>
+			<h3>Apply Leave</h3>	
 			<form onSubmit={handleSubmit(onSubmit)}>
-			    <Box >
+			    <Box p={2} sx = {{bgcolor: '#ccc'}}>
 				    <Grid container >
-				    	
 					    <Grid item xs={12}>
 						    <Box pb={2}>
 			    			    <FormControl fullWidth variant="filled">
@@ -195,7 +200,8 @@ export default function ApplyLeaveComponent() {
 								</FormControl>
 								</Box>
 						</Grid> 
-					</Grid>    
+					</Grid> 
+					<Button type="submit" size="large" color="success" variant="contained" disabled={!isValid} >Apply Leave</Button>   
 				</Box>
 			    {/*
 			    <div>
@@ -213,7 +219,6 @@ export default function ApplyLeaveComponent() {
 			    <div>
 			    	<textarea name="comment" {...register("comment", {required: true})} id="" cols="30" rows="1" className="form-control"></textarea>
 			    </div>*/}
-		      <button type="submit" variant="outlined" disabled={!isValid} >Apply Leave</button>
 		    </form>
 		</Container>
 	)

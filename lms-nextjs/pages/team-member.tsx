@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import ApplyLeaveComponent from "../components/apply-leave/applyLeave";
 import GetLeavesComponent from "../components/get-leaves/getLeaves";
 
+
 export default function teamMember({leaves}) {
 
 	const [session, loading] = useSession();
@@ -15,8 +16,10 @@ export default function teamMember({leaves}) {
 	
 	return (
 		<>
+		
 			<ApplyLeaveComponent />
-			<GetLeavesComponent leaves={leaves} />
+		
+			<GetLeavesComponent leaves={leaves} mt={3} />
 			
 		</>
 	)
