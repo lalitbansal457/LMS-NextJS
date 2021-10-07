@@ -46,6 +46,4 @@ export async function getServerSideProps(ctx) {
 	        leaves: reponseData['message'],
 	    },
 	};
-
-	
 }
